@@ -1,10 +1,25 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+projectsList = [
+    {"id": "1", "title": "E-commerce Website", "description": "This is an e-commerce website."},
+    {"id": "2", "title": "Portfolio Website", "description": "I built out my portfolio."},
+    {"id": "3", "title": "Social Network", "description": "Awesome open source project!"},
+]
 
 
 def projects(request):
-    return render(request, 'projects/projects.html')
+    context = {
+        'page': "projects",
+        'number': 10,
+        'projects': projectsList,
+    }
+    return render(request, 'projects/projects.html', context)
 
 
 def project(request, pk):
-    return render(request, 'projects/single-project.html')
+    project_obj = None
+    for i in projectsList:
+        if i['id'] == pk:
+            project_obj = i
+            break
+    return render(request, 'projects/single-project.html', {'project': project_obj})
