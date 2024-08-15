@@ -2,12 +2,12 @@
 Django5.0 Udemy Course: https://www.udemy.com/course/python-django-2021-complete-course/?couponCode=KEEPLEARNING
 
 - Admin Login
-- Username: zane@canopyteam.org
-- Password: @gv4s-K@sK6B*Jyv*-LW
+  - Username: zane@canopyteam.org
+  - Password: @gv4s-K@sK6B*Jyv*-LW
 
 - Normal User Login
-- JohnDoe
-- newjd@123
+  - JohnDoe
+  - newjd@123
 
 # Commands to remember
 - `source prodev2024/bin/activate` to activate the virtual environment
