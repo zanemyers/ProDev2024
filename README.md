@@ -1,5 +1,5 @@
 # ProDev2024
-Django5.0 Udemy Course
+Django5.0 Udemy Course: https://www.udemy.com/course/python-django-2021-complete-course/?couponCode=KEEPLEARNING
 
 - Admin Login
 - Username: zane@canopyteam.org
