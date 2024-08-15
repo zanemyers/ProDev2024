@@ -2,8 +2,8 @@
 Django5.0 Udemy Course: https://www.udemy.com/course/python-django-2021-complete-course/?couponCode=KEEPLEARNING
 
 - Admin Login
-  - Username: zane@canopyteam.org
-  - Password: @gv4s-K@sK6B*Jyv*-LW
+  - Username: company_email
+  - Password: personal_local_host_password
 
 - Normal User Login
   - JohnDoe
