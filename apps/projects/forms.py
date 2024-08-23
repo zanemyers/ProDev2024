@@ -22,3 +22,6 @@ class ProjectForm(ModelForm):
         super().__init__(*args, **kwargs)
         for name, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
+
+    def is_valid(self):
+        return super().is_valid()

@@ -1,14 +1,10 @@
 #!/usr/bin/env just --justfile
 
-@format: format_html format_just format_py
+@format: format_html format_py
 
 # Format html
 @format_html:
     djlint . --reformat --quiet
-
-# Format the justfile
-@format_just:
-    just --fmt --unstable
 
 # Format Python code
 @format_py:
@@ -56,3 +52,13 @@ lint: lint_html lint_py lint_migrations
     git add .
     git commit --amend --no-edit
     git push --force
+
+# Start the virtual enviroment
+@venv:
+    source prodev2024/bin/activate
+
+@create_app app_name:
+    python manage.py startapp {{ app_name }}
+
+@create_superuser:
+    python manage.py createsuperuser

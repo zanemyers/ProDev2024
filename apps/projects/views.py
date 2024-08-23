@@ -12,7 +12,8 @@ def projects(request):
 
 def singleProject(request, pk):
     project = Project.objects.get(id=pk)
-    return render(request, "projects/single_project.html", {"project": project})
+    context = {"project": project}
+    return render(request, "projects/single_project.html", context)
 
 
 @login_required(login_url="login")
@@ -26,7 +27,7 @@ def createProject(request):
             return redirect("projects")
 
     context = {"form": form}
-    return render(request, "projects/project_form.html", context=context)
+    return render(request, "projects/project_form.html", context)
 
 
 @login_required(login_url="login")

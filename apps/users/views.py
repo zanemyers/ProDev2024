@@ -1,11 +1,15 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+
+from apps.users.forms import RegisterUserForm
 from apps.users.models import Profile
 from django.contrib import messages
 
 
 def LoginView(request):
+    page = "login"
+
     if request.user.is_authenticated:
         return redirect("profiles")
 
@@ -25,12 +29,32 @@ def LoginView(request):
         else:
             messages.error(request, "Username or password is incorrect")
 
-    return render(request, "users/login_register.html")
+    context = {"page": page}
+    return render(request, "users/login_register.html", context)
+
+
+def RegisterView(request):
+    page = "register"
+    form = RegisterUserForm()
+
+    if request.method == "POST":
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            messages.success(request, "User was registered successfully!")
+            login(request, user)
+            return redirect("profiles")
+        else:
+            messages.error(request, "An error occurred during registration")
+
+    context = {"page": page, "form": form}
+    return render(request, "users/login_register.html", context)
 
 
 def LogoutView(request):
     logout(request)
-    messages.error(request, "User was logged out")
+    messages.info(request, "User was logged out")
     return redirect("login")
 
 
