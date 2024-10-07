@@ -8,7 +8,6 @@ from apps.users.models import Profile
 
 @receiver(post_save, sender=User)
 def createProfile(sender, instance, created, **kwargs):
-    print("createProfile")
     if created:
         user = instance
         Profile.objects.create(
@@ -17,6 +16,18 @@ def createProfile(sender, instance, created, **kwargs):
             username=user.username,
             email=user.email,
         )
+
+
+@receiver(post_save, sender=Profile)
+def updateUser(sender, instance, created, **kwargs):
+    profile = instance
+    user = profile.user
+
+    if created is False:  # If the profile is updated
+        user.first_name = profile.name
+        user.username = profile.username
+        user.email = profile.email
+        user.save()
 
 
 @receiver(post_delete, sender=Profile)

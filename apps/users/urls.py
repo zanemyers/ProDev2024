@@ -8,4 +8,5 @@ urlpatterns = [
     path("", views.ProfilesView, name="profiles"),
     path("profile/<str:pk>/", views.UserProfileView, name="user-profile"),
     path("account/", views.UserAccountView, name="account"),
+    path("edit-account/", views.EditAccountView, name="edit-account"),
 ]

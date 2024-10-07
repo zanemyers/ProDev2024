@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 
-from apps.users.forms import RegisterUserForm
+from apps.users.forms import RegisterUserForm, ProfileForm
 from apps.users.models import Profile
 from django.contrib import messages
 
@@ -45,7 +45,7 @@ def RegisterView(request):
 
             messages.success(request, "User was registered successfully!")
             login(request, user)
-            return redirect("profiles")
+            return redirect("edit-account")
         else:
             messages.error(request, "An error occurred during registration")
 
@@ -78,3 +78,21 @@ def UserAccountView(request):
     profile = request.user.profile
     context = {"profile": profile}
     return render(request, "users/account.html", context)
+
+
+@login_required(login_url="login")
+def EditAccountView(request):
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile was updated successfully")
+            return redirect("account")
+        else:
+            messages.error(request, "An error occurred during updating")
+
+    context = {"form": form}
+    return render(request, "users/profile_form.html", context)
