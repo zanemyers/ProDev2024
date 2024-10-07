@@ -61,7 +61,7 @@
                         </div>
                         <div class="settings">
                             <h3 class="settings__title">Skills</h3>
-                            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add Skill</a>
+                            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="fa-solid fa-plus"></i>&nbsp;Add Skill</a>
                         </div>
                         <table class="settings__table">
                             {% for skill in profile.skill_set.all %}
@@ -79,7 +79,8 @@
                         </table>
                         <div class="settings">
                             <h3 class="settings__title">Projects</h3>
-                            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add Project</a>
+                            <a class="tag tag--pill tag--sub settings__btn tag--lg"
+                               href="{% url 'create-project' %}"><i class="fa-solid fa-plus"></i>&nbsp;Add Project</a>
                         </div>
                         <table class="settings__table">
                             {% for project in profile.project_set.all %}
@@ -94,8 +95,10 @@
                                         <p>{{ project.description|slice:"150" }}</p>
                                     </td>
                                     <td class="settings__tableActions">
-                                        <a class="tag tag--pill tag--main settings__btn" href="#">Edit&nbsp;<i class="fa-regular fa-pen-to-square"></i></a>
-                                        <a class="tag tag--pill tag--main settings__btn" href="#">Delete&nbsp;<i class="fa-solid fa-trash-can"></i></a>
+                                        <a class="tag tag--pill tag--main settings__btn"
+                                           href="{% url 'update-project' project.id %}">Edit&nbsp;<i class="fa-regular fa-pen-to-square"></i></a>
+                                        <a class="tag tag--pill tag--main settings__btn"
+                                           href="{% url 'delete-project' project.id %}">Delete&nbsp;<i class="fa-solid fa-trash-can"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}

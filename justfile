@@ -43,12 +43,12 @@ lint: lint_html lint_py lint_migrations
 @collectstatic:
     python manage.py collectstatic
 
-@push commit_message=":( Enter a real commit message you goof": format
+@push commit_message=":( Enter a real commit message you goof":
     git add .
     git commit -m "{{ commit_message }}"
     git push
 
-@ammend: format
+@ammend:
     git add .
     git commit --amend --no-edit
     git push --force
