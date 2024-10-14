@@ -1,6 +1,8 @@
 from django.db import models
 import uuid
 
+from apps.projects.managers import ProjectQuerySet
+
 
 class Project(models.Model):
     id = models.UUIDField(
@@ -18,6 +20,8 @@ class Project(models.Model):
     vote_total = models.IntegerField(default=0, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    objects = ProjectQuerySet.as_manager()
 
     def __str__(self):
         return self.title

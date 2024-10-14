@@ -5,20 +5,22 @@ from apps.projects.forms import ProjectForm
 from django.contrib.auth.decorators import login_required
 
 
-def projects(request):
-    all_projects = Project.objects.all()
-    context = {"projects": all_projects}
+def ProjectsListView(request):
+    search_query = request.GET.get("search_query", "")
+
+    projects = Project.objects.search_projects(search_query)
+    context = {"projects": projects, "search_query": search_query}
     return render(request, "projects/projects.html", context)
 
 
-def singleProject(request, pk):
+def SingleProjectView(request, pk):
     project = Project.objects.get(id=pk)
     context = {"project": project}
     return render(request, "projects/single_project.html", context)
 
 
 @login_required(login_url="login")
-def createProject(request):
+def CreateProjectView(request):
     profile = request.user.profile
     form = ProjectForm()
 
@@ -35,7 +37,7 @@ def createProject(request):
 
 
 @login_required(login_url="login")
-def updateProject(request, pk):
+def UpdateProjectView(request, pk):
     profile = request.user.profile
     project = profile.project_set.get(id=pk)
     form = ProjectForm(instance=project)
@@ -51,7 +53,7 @@ def updateProject(request, pk):
 
 
 @login_required(login_url="login")
-def deleteProject(request, pk):
+def DeleteProjectView(request, pk):
     profile = request.user.profile
     project = profile.project_set.get(id=pk)
 

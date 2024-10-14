@@ -60,8 +60,10 @@ def LogoutView(request):
 
 
 def ProfilesView(request):
-    profiles = Profile.objects.all()
-    context = {"profiles": profiles}
+    search_query = request.GET.get("search_query", "")
+    profiles = Profile.objects.search_profiles(search_query)
+
+    context = {"profiles": profiles, "search_query": search_query}
     return render(request, "users/profiles.html", context)
 
 

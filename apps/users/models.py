@@ -2,6 +2,8 @@ import uuid
 
 from django.db import models
 
+from apps.users.managers import ProfileQuerySet
+
 
 class Profile(models.Model):
     id = models.UUIDField(
@@ -28,6 +30,8 @@ class Profile(models.Model):
     social_youtube = models.CharField(max_length=200, null=True, blank=True)
     social_website = models.CharField(max_length=200, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    objects = ProfileQuerySet.as_manager()
 
     def __str__(self):
         if self.name is not None:
