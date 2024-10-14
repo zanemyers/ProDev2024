@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from apps.projects.models import Project
 from apps.projects.forms import ProjectForm
@@ -56,7 +57,8 @@ def deleteProject(request, pk):
 
     if request.method == "POST":
         project.delete()
+        messages.success(request, "Project was deleted successfully!")
         return redirect("account")
 
-    context = {"object": project}
-    return render(request, "projects/delete_template.html", context)
+    context = {"object": project, "return_path": "account"}
+    return render(request, "base/delete_template.html", context)

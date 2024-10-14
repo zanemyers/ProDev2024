@@ -1,9 +1,9 @@
-from django.forms import ModelForm
 from django import forms
 from apps.projects.models import Project
+from apps.base.mixins import BaseForm
 
 
-class ProjectForm(ModelForm):
+class ProjectForm(BaseForm):
     class Meta:
         model = Project
         fields = [
@@ -17,11 +17,3 @@ class ProjectForm(ModelForm):
         widgets = {
             "tags": forms.CheckboxSelectMultiple(),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "input"})
-
-    def is_valid(self):
-        return super().is_valid()

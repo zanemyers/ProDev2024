@@ -43,7 +43,7 @@ lint: lint_html lint_py lint_migrations
 @collectstatic:
     python manage.py collectstatic
 
-@push commit_message=":( Enter a real commit message you goof":
+@commit commit_message=":( Enter a real commit message you goof":
     git add .
     git commit -m "{{ commit_message }}"
     git push

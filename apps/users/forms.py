@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm
+from apps.base.mixins import BaseForm
+from apps.users.models import Profile, Skill
 
-from apps.users.models import Profile
 
-
-class RegisterUserForm(UserCreationForm):
+class RegisterUserForm(UserCreationForm, BaseForm):
     usable_password = None
 
     class Meta:
@@ -15,13 +14,8 @@ class RegisterUserForm(UserCreationForm):
             "first_name": "Name",
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "input"})
 
-
-class ProfileForm(ModelForm):
+class ProfileForm(BaseForm):
     class Meta:
         model = Profile
         fields = [
@@ -39,7 +33,9 @@ class ProfileForm(ModelForm):
             "social_website",
         ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "input"})
+
+class SkillForm(BaseForm):
+    class Meta:
+        model = Skill
+        fields = "__all__"
+        exclude = ["owner"]

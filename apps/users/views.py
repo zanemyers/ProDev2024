@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 
-from apps.users.forms import RegisterUserForm, ProfileForm
+from apps.users.forms import RegisterUserForm, ProfileForm, SkillForm
 from apps.users.models import Profile
 from django.contrib import messages
 
@@ -96,3 +96,56 @@ def EditAccountView(request):
 
     context = {"form": form}
     return render(request, "users/profile_form.html", context)
+
+
+@login_required(login_url="login")
+def CreateSkillView(request):
+    profile = request.user.profile
+    form = SkillForm()
+
+    if request.method == "POST":
+        form = SkillForm(request.POST)
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.owner = profile
+            skill.save()
+            messages.success(request, "Skill was added successfully!")
+            return redirect("account")
+        else:
+            messages.error(request, "An error occurred during creation")
+
+    context = {"form": form}
+    return render(request, "users/skill_form.html", context)
+
+
+@login_required(login_url="login")
+def UpdateSkillView(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+    form = SkillForm(instance=skill)
+
+    if request.method == "POST":
+        form = SkillForm(request.POST, instance=skill)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Skill was updated successfully!")
+            return redirect("account")
+        else:
+            messages.error(request, "An error occurred while updating")
+
+    context = {"form": form}
+    return render(request, "users/skill_form.html", context)
+
+
+@login_required(login_url="login")
+def DeleteSkillView(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+
+    if request.method == "POST":
+        skill.delete()
+        messages.success(request, "Skill was deleted successfully!")
+        return redirect("account")
+
+    context = {"object": skill, "return_path": "account"}
+    return render(request, "base/delete_template.html", context)
