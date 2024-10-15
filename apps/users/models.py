@@ -39,6 +39,9 @@ class Profile(models.Model):
         else:
             return self.user.username
 
+    class Meta:
+        ordering = ["created"]
+
 
 class Skill(models.Model):
     id = models.UUIDField(

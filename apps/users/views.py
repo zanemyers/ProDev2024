@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 
+from apps.base.utils.paginator import paginate_list_object
 from apps.users.forms import RegisterUserForm, ProfileForm, SkillForm
 from apps.users.models import Profile
 from django.contrib import messages
@@ -63,7 +64,9 @@ def ProfilesView(request):
     search_query = request.GET.get("search_query", "")
     profiles = Profile.objects.search_profiles(search_query)
 
-    context = {"profiles": profiles, "search_query": search_query}
+    profiles, custom_range = paginate_list_object(request, profiles)
+
+    context = {"profiles": profiles, "search_query": search_query, "custom_range": custom_range}
     return render(request, "users/profiles.html", context)
 
 

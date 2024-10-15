@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from apps.base.utils.paginator import paginate_list_object
 from apps.projects.models import Project
 from apps.projects.forms import ProjectForm
 from django.contrib.auth.decorators import login_required
@@ -7,9 +8,11 @@ from django.contrib.auth.decorators import login_required
 
 def ProjectsListView(request):
     search_query = request.GET.get("search_query", "")
-
     projects = Project.objects.search_projects(search_query)
-    context = {"projects": projects, "search_query": search_query}
+
+    projects, custom_range = paginate_list_object(request, projects)
+
+    context = {"projects": projects, "search_query": search_query, "custom_range": custom_range}
     return render(request, "projects/projects.html", context)
 
 
