@@ -3,21 +3,22 @@
         <ul class="container">
             {% if objects.has_previous is True %}
             <li>
-                <a href="?page={{ objects.previous_page_number }}" class="btn">&#10094; Prev</a>
+                <p class="btn page-link" data-page="{{ objects.previous_page_number }}">&#10094; Prev</p>
             </li>
             {% endif %}
             {% for page_number in range %}
                 {% if page_number == objects.number %}
-                    <li><a href="?page={{ page_number }}" class="btn page-link btn--sub">{{ page_number }}</a></li>
+                    <li><p class="btn page-link btn--sub" data-page="{{ page_number }}">{{ page_number }}</p></li>
                 {% else %}
-                    <li><a href="?page={{ page_number }}" class="btn page-link">{{ page_number }}</a></li>
+                    <li><p class="btn page-link" data-page="{{ page_number }}">{{ page_number }}</p></li>
                 {% endif %}
             {% endfor %}
             {% if objects.has_next is True %}
             <li>
-                <a href="?page={{ objects.next_page_number }}" class="btn">Next &#10095;</a>
+                <p class="btn page-link" data-page="{{ objects.next_page_number }}">Next &#10095;</p>
             </li>
             {% endif %}
         </ul>
     </div>
 {% endif %}
+
